@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Commande de Livre</title>
+</head>
+<body>
+  <h2>Commander un livre</h2>
+  <form onsubmit="orderBook(event)">
+    <input type="text" id="title" placeholder="Titre du livre" required />
+    <input type="text" id="user" placeholder="Nom" required />
+    <button type="submit">Commander</button>
+  </form>
+
+  <script>
+    function orderBook(e) {
+      e.preventDefault();
+      const bookTitle = document.getElementById("title").value;
+      const user = document.getElementById("user").value;
+
+      fetch("http://localhost:3000/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookTitle, user })
+      })
+      .then(res => res.json())
+      .then(data => alert(data.message))
+      .catch(err => alert("Erreur : " + err.message));
+    }
+  </script>
+</body>
+</html>
